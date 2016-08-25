@@ -1,3 +1,4 @@
+import LC
 from read_input import np, B, GO, IO, T, tariffs1993, tariffs2005, xbilat1993, vfactor, tol, maxit, J, N
 
 ''' This is a Python 3.4.4 implementation of code made available by Caliendo and Parro, 2014 which was
@@ -101,12 +102,14 @@ F = np.zeros([J, N])
 for j in range(J):
     F[j, :] = sum((Din[j * N: (j + 1) * N, :] / tau[j * N: (j + 1) * N, :]).T)
 
-alphas = num / (np.ones([J, 1]).dot((VAn + sum(XO * (1 - F)).T - Sn).T))
+alphas = num / (np.ones([J, 1])).dot((VAn + sum(XO * (1 - F)).T.reshape(31, 1) - Sn).T)
 
 for j in range(J):
     for n in range(N):
         if alphas[j, n] < 0:
             alphas[j, n] = 0
 
-alphas = (alphas / np.ones([J, 1])).dot(sum(alphas))
+alphas = alphas / np.ones([J, 1]).dot(sum(alphas).reshape(1, 31))
 
+wf0, pf0, PQ, Fp, Dinp, ZW, Snp2 = LC.equilibrium_LC(tau_hat, taup, alphas, T, B, G, Din, J, N, maxit, tol,
+                                                  VAn/100000, Sn/100000, vfactor)
