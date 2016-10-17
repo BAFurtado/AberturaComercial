@@ -13,7 +13,7 @@ def read_data(data_to_read):
 tables = ['B', 'GO', 'IO', 'T', 'tariffs1993', 'tariffs2005', 'xbilat1993']
 B, GO, IO, T, tariffs1993, tariffs2005, xbilat1993 = read_data(tables)
 
-# Some more needed variables
+# Other needed parameters
 vfactor = -.2
 tol = 1E-07
 maxit = 1E+10
