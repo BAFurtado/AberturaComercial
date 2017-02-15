@@ -18,5 +18,4 @@ def equilibrium_LC(tau_hat, taup, alphas, T, B, G, Din, J, N, maxit, tol, VAn, S
         Dinp = dinprime.Dinprime(Din,tau_hat,c,T,J,N)
         Dinp_om = Dinp / taup
 
-
     return wf0, pf0, PQ, Fp, Dinp, ZW, Snp, c, DP, PF
