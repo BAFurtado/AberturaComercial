@@ -117,11 +117,22 @@ alphas = alphas / np.ones([J, 1]).dot(sum(alphas).reshape(1, 31))
 ##############################
 
 wf0, pf0, PQ, Fp, Dinp, ZW, Snp2 = \
-    LC.equilibrium_LC(tau_hat, taup, alphas, T, B, G, Din, J, N, maxit, tol, VAn/100000, Sn/100000, vfactor)
+    LC.Equilibrium_LC(tau_hat, taup, alphas, T, B, G, Din, J, N, maxit, tol, VAn/100000, Sn/100000, vfactor)
 
 PQ_vec = PQ.T.reshape(1, J * N, order='F').copy()
 Dinp_om = Dinp / taup
 xbilattau = (PQ_vec * np.ones((1, N))) * Dinp_om
 xbilatp = xbilattau * taup
 
+for j in range(J):
+    GO[j, :] = sum(xbilattau[j * N: (j + 1) * N,:])
 
+for j in range(J):
+    for n in range(N):
+        xbilatp[n + j * N, n] = 0
+
+to_save = ['xbilat_base_year', 'xbilatp','Dinp','xbilattau', 'alphas', 'GO']
+data = [xbilat, xbilatp, Dinp, xbilattau, alphas, GO]
+
+for each in range(len(to_save)):
+    np.savetxt(to_save[each], data[each], delimiter=';')

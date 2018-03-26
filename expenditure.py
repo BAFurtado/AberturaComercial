@@ -5,7 +5,7 @@
 import numpy as np
 
 
-def expenditure(alphas, B, G, Dinp, taup, Fp, VAn, wf0, Sn, J, N):
+def Expenditure(alphas, B, G, Dinp, taup, Fp, VAn, wf0, Sn, J, N):
 
     # [J, N] = np.shape(A)
     IA = np.zeros(J * N, J * N)
