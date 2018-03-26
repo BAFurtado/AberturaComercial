@@ -1,17 +1,18 @@
 import LC
 from read_input import np, B, GO, IO, T, tariffs1993, tariffs2005, xbilat1993, vfactor, tol, maxit, J, N
 
+
 ''' This is a Python 3.4.4 implementation of code made available by Caliendo and Parro, 2014 which was
     originally implemented in MatLab.
-    P.S. By default, Numpy applies * form elementwise multiplication
+    P.S. By default, Numpy applies * for elementwise multiplication
          Matrix multiplication should use A.dot(B)
 
 '''
 
-# Countries = [Argentina    Australia   Austria Brazil  Canada  Chile China   Denmark Finland France...
-#              Germany  Greece  Hungary India   Indonesia   Ireland Italy   Japan   Korea Mexico ...
-#              Netherlands New Zealand Norway  Portugal    SouthAfrica Spain   Sweden  Turkey  UK   USA ...
-#              ROW];
+countries = ['Argentina', 'Australia', 'Austria', 'Brazil', 'Canada', 'Chile', 'China', 'Denmark', 'Finland',
+             'France', 'Germany', 'Greece', 'Hungary', 'India', 'Indonesia', 'Ireland', 'Italy', 'Japan', 'Korea',
+             'Mexico', 'Netherlands', 'New Zealand', 'Norway', 'Portugal', 'South Africa', 'Spain', 'Sweden',
+             'Turkey', 'UK', 'USA']
 
 # Loading trade flows
 # Converting into dollars from thousand dollars
@@ -74,7 +75,7 @@ for j in range(J):
     XO[j, :] = A[:, j * N: (j + 1) * N]
 
 # Calculating expenditures shares
-Xjn = sum(xbilat.T).T.reshape(1240,1).dot(np.ones([1, N]))
+Xjn = sum(xbilat.T).T.reshape(1240, 1).dot(np.ones([1, N]))
 Din = xbilat / Xjn
 
 # Calculating superavits
@@ -111,5 +112,16 @@ for j in range(J):
 
 alphas = alphas / np.ones([J, 1]).dot(sum(alphas).reshape(1, 31))
 
-wf0, pf0, PQ, Fp, Dinp, ZW, Snp2 = LC.equilibrium_LC(tau_hat, taup, alphas, T, B, G, Din, J, N, maxit, tol,
-                                                  VAn/100000, Sn/100000, vfactor)
+##############################
+# Main program conterfactuals
+##############################
+
+wf0, pf0, PQ, Fp, Dinp, ZW, Snp2 = \
+    LC.equilibrium_LC(tau_hat, taup, alphas, T, B, G, Din, J, N, maxit, tol, VAn/100000, Sn/100000, vfactor)
+
+PQ_vec = PQ.T.reshape(1, J * N, order='F').copy()
+Dinp_om = Dinp / taup
+xbilattau = (PQ_vec * np.ones((1, N))) * Dinp_om
+xbilatp = xbilattau * taup
+
+
