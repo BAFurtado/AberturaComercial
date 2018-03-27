@@ -9,17 +9,18 @@ def Dinprime(Din, tau_hat, c, T, J, N):
         for n in range(N):
             LT[j * N + n, :] = T[j, :]
 
-    cp = np.ones([1, N])
+    cp = np.ones(c.shape)
     for n in range(N):
-        cp[:, n] = c[:, n] ** (1 / T)
+        cp[:, n] = c[:, n] ** (-1 / T.reshape(1, J))
 
     Din_om = Din * (tau_hat ** (-1 / (LT * np.ones([1, N]))))
 
-    DD = np.ones(N, 1)
+    DD = np.ones((J, N))
     for n in range(N):
-        DD[n, :] = Din_om[n, :] * cp
+        idx = N - (N - n)
+        DD = Din_om[n: idx + 1: N, :] * cp
 
-    phat = sum(DD.T).T ** -LT
+    phat = sum(DD.T).T.reshape(J, 1) ** -LT
 
     Dinp = np.ones(1, N)
     for n in range(N):

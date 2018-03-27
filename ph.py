@@ -35,7 +35,7 @@ def PH(wages_N, tau_hat, T, B, G, Din, J, N, maxit, tol):
         phat = np.zeros([J, N])
         for j in range(J):
             for n in range(N):
-                phat[j, n] = Din_om[j * N: (j + 1) * N, :].dot(c[j, :] ** (-1 / T[j])).T
+                phat[j, n] = Din_om[n + j * N, :].dot(c[j, :] ** (-1 / T[j])).T
 
                 # this happens because of sectors with zero VA
                 # Note that we do not want logs of zero
@@ -47,7 +47,7 @@ def PH(wages_N, tau_hat, T, B, G, Din, J, N, maxit, tol):
         # Checking tolerance
         pfdev = abs(phat - pf0)
         pf0 = phat
-        pfmax = max(max(pfdev))
+        pfmax = np.amax(pfdev)
         it += 1
 
     return pf0, c
