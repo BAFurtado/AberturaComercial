@@ -15,12 +15,12 @@ def Dinprime(Din, tau_hat, c, T, J, N):
 
     Din_om = Din * (tau_hat ** (-1 / (LT * np.ones([1, N]))))
 
-    DD = np.ones((J, N))
+    DD = np.zeros((J * N, N))
+    print(Din.shape[1])
     for n in range(N):
-        idx = N - (N - n)
-        DD = Din_om[n: idx + 1: N, :] * cp
+        DD[n * N: ((n + 1) * N) - 1 : (N - 1), :] = Din_om[n: Din.shape[1] - 1 - (N - 1 - n): (N - 1), :] * cp
 
-    phat = sum(DD.T).T.reshape(J, 1) ** -LT
+    phat = DD.sum(axis=1).T ** -LT
 
     Dinp = np.ones(1, N)
     for n in range(N):
