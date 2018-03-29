@@ -37,6 +37,7 @@ def Expenditure(alphas, B, G, Dinp, taup, Fp, VAn, wf0, Sn, J, N):
     Bb = -alphas * (Sn * np.ones((1, J))).T
     Bb = Bb.reshape(J * N, 1, order='F').copy()
 
+
     DD1 = (OM ** -1) * Vb
     DD2 = (OM ** -1) * Bb
     PQ = DD1 + DD2
