@@ -16,9 +16,8 @@ def Dinprime(Din, tau_hat, c, T, J, N):
     Din_om = Din * (tau_hat ** (-1 / (LT * np.ones([1, N]))))
 
     DD = np.zeros((J * N, N))
-    print(Din.shape[1])
     for n in range(N):
-        DD[n * N: ((n + 1) * N) - 1 : (N - 1), :] = Din_om[n: Din.shape[1] - 1 - (N - 1 - n): (N - 1), :] * cp
+        DD[np.arange((J - 1) * n + n, J * (n + 1), 1), :] = Din_om[np.arange((J - 1) * n + n, J * (n + 1), 1), :] * cp
 
     phat = DD.sum(axis=1).T ** -LT
 
