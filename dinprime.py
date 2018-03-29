@@ -4,7 +4,7 @@ import numpy as np
 def Dinprime(Din, tau_hat, c, T, J, N):
 
     # reformatting theta vector
-    LT = np.ones(J * N * N).reshape(J * N, N)
+    LT = np.ones(J * N).reshape(J * N, 1)
     for j in range(J):
         for n in range(N):
             LT[j * N + n, :] = T[j, :]
@@ -19,10 +19,8 @@ def Dinprime(Din, tau_hat, c, T, J, N):
     for n in range(N):
         DD[np.arange((J - 1) * n + n, J * (n + 1), 1), :] = Din_om[np.arange((J - 1) * n + n, J * (n + 1), 1), :] * cp
 
-    phat = DD.sum(axis=1).T ** -LT
+    phat = pow(DD.sum(axis=1).T.reshape(N * J, 1), -LT)
 
-    Dinp = np.ones(1, N)
-    for n in range(N):
-        Dinp[:, n] = DD[:, n] * (phat ** (1/LT))
+    Dinp = DD * (phat ** (1 / LT))
 
     return Dinp
