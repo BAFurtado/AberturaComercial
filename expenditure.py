@@ -8,7 +8,7 @@ import numpy as np
 def Expenditure(alphas, B, G, Dinp, taup, Fp, VAn, wf0, Sn, J, N):
 
     # [J, N] = np.shape(A)
-    IA = np.zeros(J * N, J * N)
+    IA = np.zeros((J * N, J * N))
     I_F = 1 - Fp
 
     for i in range(N):

@@ -21,12 +21,12 @@ def Equilibrium_LC(tau_hat, taup, alphas, T, B, G, Din, J, N, maxit, tol, VAn, S
         Dinp = dinprime.Dinprime(Din, tau_hat, c, T, J, N)
         Dinp_om = Dinp / taup
 
-        Fp = np.zeros((1, J))
+        Fp = np.zeros((J, N))
         for j in range(J):
-            Fp[j, :] = sum((Dinp[j * N: 1: (j + 1) * N, :] / taup[j * N: 1: (j + 1) * N, :]).T)
+            Fp[j, :] = sum((Dinp[j * N: (j + 1) * N: 1, :] / taup[j * N: (j + 1) * N: 1, :]).T)
 
         # Expenditure matrix
-        PQ = expenditure.Expenditure(alphas,B,G,Dinp,taup,Fp,VAn,wf0,Sn,J,N)
+        PQ = expenditure.Expenditure(alphas, B, G, Dinp, taup, Fp, VAn, wf0, Sn, J, N)
 
         # Iterating using LMC
         wf1 = LMC.lmc(PQ, Dinp_om, J,N,B,VAn)
