@@ -11,8 +11,8 @@ def Expenditure(alphas, B, G, Dinp, taup, Fp, VAn, wf0, Sn, J, N):
     IA = np.zeros((J * N, J * N))
     I_F = 1 - Fp
 
-    for i in range(N):
-        IA[i * J: ((i + 1) * J), i * J:((i + 1) * J)] = np.kron(alphas[:, i], I_F[:, i].T)
+    for n in range(N):
+        IA[n * J: (n + 1) * J, n * J: (n + 1) * J] = np.kron(alphas[:, n], I_F[:, n].T).reshape(40, 40)
 
     Pit = Dinp/taup
     Bt = 1 - B
