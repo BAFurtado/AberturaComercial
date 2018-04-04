@@ -3,6 +3,7 @@
  tarifap = tarifs, Fp = trade weighted tariffs """
 
 import numpy as np
+from numpy.linalg import matrix_power
 
 
 def Expenditure(alphas, B, G, Dinp, taup, Fp, VAn, wf0, Sn, J, N):
@@ -37,8 +38,9 @@ def Expenditure(alphas, B, G, Dinp, taup, Fp, VAn, wf0, Sn, J, N):
     Bb = -alphas * (Sn * np.ones((1, J))).T
     Bb = Bb.reshape(J * N, 1, order='F').copy()
 
-    DD1 = np.power(OM, -1.) * Vb
-    DD2 = (OM ** -1) * Bb
+    temp = matrix_power(OM, -1)
+    DD1 = temp.dot(Vb)
+    DD2 = temp.dot(Bb)
     PQ = DD1 + DD2
     PQ = PQ.reshape(J, N, order='F').copy()
 

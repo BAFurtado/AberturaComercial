@@ -6,7 +6,7 @@ import numpy as np
 
 
 def lmc(Xp, Dinp, J, N, B, VAL):
-    PQ_vec = Xp.T.reshape(J * N, 1, offer='F').copy()
+    PQ_vec = Xp.T.reshape(J * N, 1, order='F').copy()
 
     DDinpt = np.zeros((J * N, N))
     for n in range(N):

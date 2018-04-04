@@ -29,7 +29,7 @@ def Equilibrium_LC(tau_hat, taup, alphas, T, B, G, Din, J, N, maxit, tol, VAn, S
         PQ = expenditure.Expenditure(alphas, B, G, Dinp, taup, Fp, VAn, wf0, Sn, J, N)
 
         # Iterating using LMC
-        wf1 = LMC.lmc(PQ, Dinp_om, J,N,B,VAn)
+        wf1 = LMC.lmc(PQ, Dinp_om, J, N, B, VAn)
 
         # Excess function
         ZW = (wf1 - wf0)
