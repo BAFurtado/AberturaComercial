@@ -46,10 +46,10 @@ def Equilibrium_LC(tau_hat, taup, alphas, T, B, G, Din, J, N, maxit, tol, VAn, S
         # calculating RHS (Imports) trade balance
         PF = PQ * Fp
         # Imports
-        RHS = sum(PF).T
+        RHS = sum(PF).T.reshape(N, 1)
 
         # Excess function (trade balance)
-        Snp = (RHS - LHS + Sn)
+        Snp = (RHS - LHS) + Sn
         ZW2 = -(RHS - LHS + Sn) / VAn
 
         # Itaration factor prices

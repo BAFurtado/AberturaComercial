@@ -19,7 +19,7 @@ def lmc(Xp, Dinp, J, N, B, VAL):
 
     aux4 = B * DDDinpt
     aux5 = sum(aux4)
-    aux5 = aux5.T
+    aux5 = aux5.T.reshape(N, 1)
     wf0 = (1 / VAL) * aux5
     
     return wf0
