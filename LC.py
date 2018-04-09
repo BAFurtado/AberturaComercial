@@ -11,10 +11,10 @@ def Equilibrium_LC(tau_hat, taup, alphas, T, B, G, Din, J, N, maxit, tol, VAn, S
     # initialize vectors of ex-post wage and price factors
     wf0 = np.ones([N, 1])
     pf0 = np.ones([J, N])
-    wfmax = 1
-    e = 1
+    wfmax = np.array([1.0])
+    e = 1.0
 
-    while e <= maxit and wfmax > tol:
+    while (e <= maxit) and (wfmax.all() > tol):
         pf0, c = ph.PH(wf0, tau_hat, T, B, G, Din, J, N, maxit, tol)
 
         # Calculating trade shares
@@ -36,9 +36,9 @@ def Equilibrium_LC(tau_hat, taup, alphas, T, B, G, Din, J, N, maxit, tol, VAn, S
 
         PQ_vec = PQ.T.reshape(1, J * N, order='F').copy().T
 
-        DP = np.zeros((1, N))
+        DP = np.zeros((J * N, N))
         for n in range(N):
-            DP[:, n] = Dinp_om[:, n] * PQ_vec
+            DP[:, n] = Dinp_om[:, n] * PQ_vec.reshape(1, J * N)
 
         # Exports
         LHS = sum(DP).T

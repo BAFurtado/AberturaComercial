@@ -8,12 +8,13 @@ import numpy as np
 def lmc(Xp, Dinp, J, N, B, VAL):
     PQ_vec = Xp.T.reshape(J * N, 1, order='F').copy()
 
+    # Check if DDinpt gives a different value
     DDinpt = np.zeros((J * N, N))
     for n in range(N):
-        DDinpt[:, n] = Dinp[:, n] * PQ_vec
+        DDinpt[:, n] = Dinp[:, n] * PQ_vec.reshape(1, J * N)
 
-    DDDinpt = np.zeros((N, J * N))
-    for n in range(N):
+    DDDinpt = np.zeros((J, N))
+    for n in range(J):
         DDDinpt[n, :] = sum(DDinpt[n * N: (n + 1) * N, :])
 
     aux4 = B * DDDinpt
