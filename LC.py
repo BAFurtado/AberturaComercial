@@ -41,7 +41,7 @@ def Equilibrium_LC(tau_hat, taup, alphas, T, B, G, Din, J, N, maxit, tol, VAn, S
             DP[:, n] = Dinp_om[:, n] * PQ_vec.reshape(1, J * N)
 
         # Exports
-        LHS = sum(DP).T
+        LHS = sum(DP).T.reshape(N, 1)
 
         # calculating RHS (Imports) trade balance
         PF = PQ * Fp
@@ -55,7 +55,7 @@ def Equilibrium_LC(tau_hat, taup, alphas, T, B, G, Din, J, N, maxit, tol, VAn, S
         # Itaration factor prices
         wf1 = wf0 * (1 - vfactor * ZW2 / wf0)
 
-        wfmax = sum((abs(wf1 - wf0)))
+        # wfmax = sum((abs(wf1 - wf0)))
         wfmax = sum(abs(Snp))
 
         wfmax0 = wfmax
