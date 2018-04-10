@@ -121,7 +121,7 @@ wf0, pf0, PQ, Fp, Dinp, ZW, Snp2 = \
 
 PQ_vec = PQ.T.reshape(J * N, 1, order='F').copy()
 Dinp_om = Dinp / taup
-xbilattau = (PQ_vec * np.ones((1, N))) * Dinp_om
+xbilattau = (PQ_vec.dot(np.ones((1, N)))) * Dinp_om
 xbilatp = xbilattau * taup
 
 for j in range(J):
