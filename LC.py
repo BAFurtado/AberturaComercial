@@ -63,4 +63,4 @@ def Equilibrium_LC(tau_hat, taup, alphas, T, B, G, Din, J, N, maxit, tol, VAn, S
 
         e += 1
 
-    return wf0, pf0, PQ, Fp, Dinp, ZW, Snp, c, DP, PF
+    return wf0, pf0, PQ, Fp, Dinp, ZW, Snp

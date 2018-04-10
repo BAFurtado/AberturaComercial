@@ -17,6 +17,6 @@ B, GO, IO, T, tariffs1993, tariffs2005, xbilat1993 = read_data(tables)
 # Other needed parameters
 vfactor = -.2
 tol = 1E-07
-maxit = 1E+3
+maxit = 10
 J = 40
 N = 31
