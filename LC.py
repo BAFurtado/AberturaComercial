@@ -14,7 +14,7 @@ def Equilibrium_LC(tau_hat, taup, alphas, T, B, G, Din, J, N, maxit, tol, VAn, S
     wfmax = np.array([1.0])
     e = 1.0
 
-    while (e <= maxit) and (wfmax.all() > tol):
+    while (e <= maxit) and (wfmax[0] > tol):
         pf0, c = ph.PH(wf0, tau_hat, T, B, G, Din, J, N, maxit, tol)
 
         # Calculating trade shares
@@ -57,8 +57,9 @@ def Equilibrium_LC(tau_hat, taup, alphas, T, B, G, Din, J, N, maxit, tol, VAn, S
 
         # wfmax = sum((abs(wf1 - wf0)))
         wfmax = sum(abs(Snp))
+        print(wfmax)
 
-        wfmax0 = wfmax
+        # wfmax0 = wfmax
         wf0 = wf1
 
         e += 1
